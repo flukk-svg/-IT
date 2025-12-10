@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบบลงทะเบียนอุปกรณ์คอมพิวเตอร์</title>
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
   <style>
+    /* CSS Styles: ส่วนนี้ยังคงเดิม */
     body {
       box-sizing: border-box;
     }
@@ -41,648 +40,646 @@
     }
 
     .header {
-      background: white;
-      border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      text-align: center;
+      background: #ffffff;
+      padding: 15px 20px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .header h1 {
-      font-size: 32px;
+      font-size: 24px;
       color: #667eea;
-      margin-bottom: 10px;
     }
 
     .tabs {
       display: flex;
-      gap: 15px;
-      margin-bottom: 30px;
-      justify-content: center;
+      background: #ffffff;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .tab-button {
-      padding: 12px 30px;
-      border: none;
-      background: white;
-      color: #667eea;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 600;
+      flex: 1;
+      padding: 15px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .tab-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      text-align: center;
+      font-weight: 600;
+      color: #764ba2;
+      transition: background 0.3s, color 0.3s;
     }
 
     .tab-button.active {
+      color: #ffffff;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
     }
 
     .tab-content {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: none;
-      background: white;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .tab-content.active {
       display: block;
     }
 
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
     .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: #333;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
-      font-family: inherit;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .optional-label {
-      color: #999;
-      font-size: 12px;
-      font-weight: normal;
-    }
-
-    .camera-section {
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
 
-    .camera-buttons {
-      display: flex;
-      gap: 10px;
+    .full-width {
+      grid-column: 1 / 3;
     }
 
-    .camera-button {
-      flex: 1;
-      padding: 10px 20px;
-      border: 2px solid #667eea;
-      background: white;
-      color: #667eea;
-      border-radius: 8px;
-      font-size: 14px;
+    label {
+      margin-bottom: 8px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      color: #333;
+      font-size: 14px;
     }
 
-    .camera-button:hover {
-      background: #667eea;
-      color: white;
+    input[type="text"],
+    select,
+    textarea {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #667eea;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: opacity 0.3s;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      grid-column: 1 / 3;
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+
+    /* Image Upload Styles */
+    .image-upload-group {
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      min-height: 150px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .image-upload-group:hover {
+      border-color: #764ba2;
     }
 
     .image-preview {
       width: 100%;
-      max-height: 300px;
+      height: 100%;
+      max-height: 200px;
       object-fit: contain;
-      border-radius: 8px;
-      border: 2px solid #e0e0e0;
-      display: none;
-      margin-top: 10px;
+      border-radius: 4px;
     }
 
-    .image-preview.show {
+    .clear-image-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ccc;
+      color: #000;
+      padding: 5px 8px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      display: none;
+      z-index: 10;
+    }
+
+    .clear-image-btn.show {
       display: block;
     }
 
-    .submit-button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-    }
-
-    .submit-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    .submit-button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .search-filter-section {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
-
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+    .image-upload-text {
+      color: #999;
       font-size: 14px;
-      font-family: inherit;
+      text-align: center;
     }
 
-    .search-box:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-
-    .filter-select {
-      min-width: 200px;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      cursor: pointer;
-    }
-
-    .filter-select:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-
-    .device-grid {
+    /* Device List Styles */
+    .device-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
+      margin-top: 20px;
     }
 
     .device-card {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 20px;
-      border: 2px solid #e0e0e0;
-      transition: all 0.3s ease;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
     }
 
     .device-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      border-color: #667eea;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .device-image-container {
+    .device-card-image {
       width: 100%;
-      height: 180px;
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border: 2px solid #e0e0e0;
-    }
-
-    .device-image {
-      width: 100%;
-      height: 100%;
+      height: 200px;
       object-fit: cover;
+      background: #eee;
+      border-bottom: 1px solid #ddd;
     }
 
-    .no-image-placeholder {
-      color: #999;
-      font-size: 48px;
+    .device-card-content {
+      padding: 15px;
     }
 
-    .device-info h3 {
+    .device-card-content h3 {
+      margin-top: 0;
       color: #667eea;
-      margin-bottom: 10px;
       font-size: 18px;
     }
 
-    .device-info p {
-      color: #555;
-      margin-bottom: 6px;
+    .device-card-content p {
+      margin-bottom: 5px;
       font-size: 14px;
+      color: #555;
     }
 
-    .device-info strong {
-      color: #333;
+    .badge-container {
+      margin-top: 10px;
     }
 
     .badge {
       display: inline-block;
-      padding: 4px 12px;
-      background: #667eea;
-      color: white;
-      border-radius: 20px;
+      padding: 4px 8px;
+      margin-right: 5px;
+      border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
-      margin-top: 8px;
-      margin-right: 5px;
+      color: #ffffff;
+      background-color: #764ba2;
     }
 
-    .empty-state {
+    .no-data {
       text-align: center;
-      padding: 60px 20px;
       color: #999;
+      padding: 50px;
+      font-size: 18px;
     }
 
-    .empty-state-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
-    }
-
-    .empty-state h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #666;
-    }
-
+    /* Toast Notification */
     .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 1000;
+      visibility: hidden;
       min-width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 30px;
+      font-size: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     .toast.show {
-      display: block;
-      animation: slideIn 0.3s ease;
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
 
     .toast.success {
-      border-left: 4px solid #4caf50;
+      background-color: #4CAF50;
     }
 
     .toast.error {
-      border-left: 4px solid #f44336;
+      background-color: #F44336;
     }
 
-    @keyframes slideIn {
-      from {
-        transform: translateX(400px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+    @keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
     }
 
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
+    }
+
+    /* Loading Spinner */
     .loading-spinner {
-      display: inline-block;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
       width: 16px;
       height: 16px;
-      border: 2px solid #ffffff;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
+      animation: spin 1s linear infinite;
+      display: inline-block;
       margin-right: 8px;
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .full-width {
+        grid-column: 1 / 2;
+      }
     }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
   <div class="app-wrapper">
    <div class="container">
     <div class="header">
-     <h1 id="app-title">ระบบลงทะเบียนอุปกรณ์คอมพิวเตอร์</h1>
-     <p>โรงพยาบาล</p>
+     <h1 id="app-name">ระบบลงทะเบียนอุปกรณ์คอมพิวเตอร์</h1>
     </div>
-    <div class="tabs"><button class="tab-button active" data-tab="register">📝 <span id="register-tab-text">ลงทะเบียนอุปกรณ์</span></button> <button class="tab-button" data-tab="list">📋 <span id="list-tab-text">รายการอุปกรณ์</span></button>
+    <div class="tabs">
+     <div class="tab-button active" id="tab-register-btn" onclick="switchTab('register')">
+      ลงทะเบียน
+     </div>
+     <div class="tab-button" id="tab-list-btn" onclick="switchTab('list')">
+      รายการอุปกรณ์ (<span id="device-count">0</span>)
+     </div>
     </div>
-    <div id="register-tab" class="tab-content active">
+    <div id="tab-register" class="tab-content active">
      <h2 style="margin-bottom: 25px; color: #667eea;" id="register-form-title">ลงทะเบียนอุปกรณ์ใหม่</h2>
-     <form id="device-form">
-      <div class="form-group"><label for="device_id">รหัสทรัพย์สิน</label> <input type="text" id="device_id" name="device_id" required>
+     <form id="device-form" onsubmit="event.preventDefault(); handleSubmit();">
+      <div class="form-group">
+       <label for="device_id">รหัสทรัพย์สิน / Serial Number *</label>
+       <input type="text" id="device_id" required>
       </div>
-      <div class="form-group"><label>รูปรหัสทรัพย์สิน <span class="optional-label">(ไม่จำเป็น)</span></label>
-       <div class="camera-section">
-        <div class="camera-buttons"><button type="button" class="camera-button" id="take-asset-photo-btn">📷 ถ่ายรูปรหัส</button> <button type="button" class="camera-button" id="upload-asset-photo-btn">🖼️ เลือกรูปรหัส</button> <button type="button" class="camera-button" id="clear-asset-photo-btn" style="display: none;">🗑️ ลบรูป</button>
-        </div><input type="file" id="asset-file-input" accept="image/*" style="display: none;"> <input type="file" id="asset-camera-input" accept="image/*" capture="environment" style="display: none;"> <img id="asset-image-preview" class="image-preview" alt="ตัวอย่างรูปรหัสทรัพย์สิน">
+      <div class="form-group">
+       <label for="device_name">ชื่ออุปกรณ์ *</label>
+       <input type="text" id="device_name" required>
+      </div>
+      <div class="form-group">
+       <label for="user_name">ชื่อผู้ใช้งาน *</label>
+       <input type="text" id="user_name" required>
+      </div>
+      <div class="form-group" id="department-group">
+       <label for="department">แผนก / หน่วยงาน *</label>
+       <select id="department" required onchange="handleDropdownChange('department')">
+        </select>
+      </div>
+      <div class="form-group" id="custom-department-group" style="display: none;">
+       <label for="custom_department">ระบุแผนก / หน่วยงานอื่นๆ *</label>
+       <input type="text" id="custom_department">
+      </div>
+      <div class="form-group" id="device-type-group">
+       <label for="device_type">ประเภทอุปกรณ์ *</label>
+       <select id="device_type" required onchange="handleDropdownChange('device_type')">
+        </select>
+      </div>
+      <div class="form-group" id="custom-device-type-group" style="display: none;">
+       <label for="custom_device_type">ระบุประเภทอื่นๆ *</label>
+       <input type="text" id="custom_device_type">
+      </div>
+      <div class="form-group">
+       <label for="asset_image_input">รูปภาพรหัสทรัพย์สิน (ถ่ายภาพ Serial Number หรือ QR Code)</label>
+       <input type="file" id="asset_image_input" accept="image/*" style="display: none;" onchange="handleAssetImageSelect(event)">
+       <div class="image-upload-group" onclick="document.getElementById('asset_image_input').click()">
+        <img id="asset_image_preview" class="image-preview" src="" style="display: none;">
+        <span class="clear-image-btn" id="clear-asset-image-btn" onclick="event.stopPropagation(); clearAssetImage();">x</span>
+        <p class="image-upload-text" id="asset-upload-text">คลิกเพื่อเลือกหรือถ่ายภาพ</p>
        </div>
       </div>
-      <div class="form-group"><label for="device_type">ประเภทอุปกรณ์</label> <select id="device_type" name="device_type" required> <option value="">-- เลือกประเภทอุปกรณ์ --</option> <option value="คอมพิวเตอร์">คอมพิวเตอร์</option> <option value="หน้าจอ">หน้าจอ</option> <option value="เครื่องปริ้น">เครื่องปริ้น</option> <option value="สแกนเนอร์">สแกนเนอร์</option> <option value="โน๊ตบุค">โน๊ตบุค</option> <option value="All in one">All in one</option> <option value="อื่นๆ">อื่นๆ</option> </select>
-      </div>
-      <div class="form-group" id="custom-device-type-group" style="display: none;"><label for="custom_device_type">ระบุประเภทอุปกรณ์</label> <input type="text" id="custom_device_type" name="custom_device_type" placeholder="กรุณาระบุประเภทอุปกรณ์">
-      </div>
-      <div class="form-group"><label>รูปภาพอุปกรณ์ <span class="optional-label">(ไม่จำเป็น)</span></label>
-       <div class="camera-section">
-        <div class="camera-buttons"><button type="button" class="camera-button" id="take-photo-btn">📷 ถ่ายรูป</button> <button type="button" class="camera-button" id="upload-photo-btn">🖼️ เลือกรูป</button> <button type="button" class="camera-button" id="clear-photo-btn" style="display: none;">🗑️ ลบรูป</button>
-        </div><input type="file" id="file-input" accept="image/*" style="display: none;"> <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;"> <img id="image-preview" class="image-preview" alt="ตัวอย่างรูปภาพ">
+      <div class="form-group">
+       <label for="image_input">รูปภาพอุปกรณ์ (ถ่ายภาพตัวเครื่อง)</label>
+       <input type="file" id="image_input" accept="image/*" style="display: none;" onchange="handleImageSelect(event)">
+       <div class="image-upload-group" onclick="document.getElementById('image_input').click()">
+        <img id="image_preview" class="image-preview" src="" style="display: none;">
+        <span class="clear-image-btn" id="clear-image-btn" onclick="event.stopPropagation(); clearImage();">x</span>
+        <p class="image-upload-text" id="upload-text">คลิกเพื่อเลือกหรือถ่ายภาพ</p>
        </div>
       </div>
-      <div class="form-group"><label for="device_name">ชื่อเครื่อง</label> <input type="text" id="device_name" name="device_name" required>
+      <div class="form-group full-width">
+       <label for="detail">รายละเอียดเพิ่มเติม (Spec, Location, IP Address ฯลฯ)</label>
+       <textarea id="detail" rows="4"></textarea>
       </div>
-      <div class="form-group"><label for="user_name">ชื่อผู้ใช้งาน</label> <input type="text" id="user_name" name="user_name" required>
-      </div>
-      <div class="form-group"><label for="department">แผนก</label> <select id="department" name="department" required> <option value="">-- เลือกแผนก --</option> <option value="พิเศษชั้น 3">พิเศษชั้น 3</option> <option value="พิเศษชั้น 2">พิเศษชั้น 2</option> <option value="ไอที">ไอที</option> <option value="จัดซื้อ">จัดซื้อ</option> <option value="OPD">OPD</option> <option value="หน้าห้องตรวจ">หน้าห้องตรวจ</option> <option value="ห้องตรวจ">ห้องตรวจ</option> <option value="VIP Graden">VIP Graden</option> <option value="LAB">LAB</option> <option value="การเงิน">การเงิน</option> <option value="เวชระเบียน">เวชระเบียน</option> <option value="ประชาสัมพันธ์">ประชาสัมพันธ์</option> <option value="ห้องยา">ห้องยา</option> <option value="สต๊อคยา">สต๊อคยา</option> <option value="เวรเปล">เวรเปล</option> <option value="ER">ER</option> <option value="คลังพัสดุ">คลังพัสดุ</option> <option value="คลังยา">คลังยา</option> <option value="VIP Gold">VIP Gold</option> <option value="ไตเทียม">ไตเทียม</option> <option value="ห้อง CT">ห้อง CT</option> <option value="X-Ray">X-Ray</option> <option value="ห้องผู้จัดการฝ่ายการพยาบาล">ห้องผู้จัดการฝ่ายการพยาบาล</option> <option value="Ward VIP Gold 2">Ward VIP Gold 2</option> <option value="ห้องผ่าตัด">ห้องผ่าตัด</option> <option value="แผนกช่าง">แผนกช่าง</option> <option value="แผนกจ่ายกลาง">แผนกจ่ายกลาง</option> <option value="สำนักงาน">สำนักงาน</option> <option value="จป.">จป.</option> <option value="ฝ่ายบุคคล">ฝ่ายบุคคล</option> <option value="ห้องประชุมชั้น 2">ห้องประชุมชั้น 2</option> <option value="แผนการตลาด">แผนการตลาด</option> <option value="CEO">CEO</option> <option value="HIFU">HIFU</option> <option value="อื่นๆ">อื่นๆ</option> </select>
-      </div>
-      <div class="form-group" id="custom-department-group" style="display: none;"><label for="custom_department">ระบุชื่อแผนก</label> <input type="text" id="custom_department" name="custom_department" placeholder="กรุณาระบุชื่อแผนก">
-      </div>
-      <div class="form-group"><label for="detail">รายละเอียดเพิ่มเติม <span class="optional-label">(ไม่จำเป็น)</span></label> <textarea id="detail" name="detail" placeholder="ระบุรายละเอียดเพิ่มเติม..."></textarea>
-      </div><button type="submit" class="submit-button" id="submit-btn"> <span id="submit-btn-text">บันทึกข้อมูล</span> </button>
+      <button type="submit" class="submit-btn" id="submit-btn">
+       <span id="submit-btn-text">บันทึกข้อมูล</span>
+      </button>
      </form>
     </div>
-    <div id="list-tab" class="tab-content">
-     <h2 style="margin-bottom: 25px; color: #667eea;" id="device-list-title">รายการอุปกรณ์ทั้งหมด</h2>
-     <div class="search-filter-section"><input type="text" class="search-box" id="search-box" placeholder="🔍 ค้นหารหัสทรัพย์สิน, ชื่อเครื่อง, หรือผู้ใช้งาน..."> <select class="filter-select" id="department-filter"> <option value="">แสดงทุกแผนก</option> <option value="พิเศษชั้น 3">พิเศษชั้น 3</option> <option value="พิเศษชั้น 2">พิเศษชั้น 2</option> <option value="ไอที">ไอที</option> <option value="จัดซื้อ">จัดซื้อ</option> <option value="OPD">OPD</option> <option value="หน้าห้องตรวจ">หน้าห้องตรวจ</option> <option value="ห้องตรวจ">ห้องตรวจ</option> <option value="VIP Graden">VIP Graden</option> <option value="LAB">LAB</option> <option value="การเงิน">การเงิน</option> <option value="เวชระเบียน">เวชระเบียน</option> <option value="ประชาสัมพันธ์">ประชาสัมพันธ์</option> <option value="ห้องยา">ห้องยา</option> <option value="สต๊อคยา">สต๊อคยา</option> <option value="เวรเปล">เวรเปล</option> <option value="ER">ER</option> <option value="คลังพัสดุ">คลังพัสดุ</option> <option value="คลังยา">คลังยา</option> <option value="VIP Gold">VIP Gold</option> <option value="ไตเทียม">ไตเทียม</option> <option value="ห้อง CT">ห้อง CT</option> <option value="X-Ray">X-Ray</option> <option value="ห้องผู้จัดการฝ่ายการพยาบาล">ห้องผู้จัดการฝ่ายการพยาบาล</option> <option value="Ward VIP Gold 2">Ward VIP Gold 2</option> <option value="ห้องผ่าตัด">ห้องผ่าตัด</option> <option value="แผนกช่าง">แผนกช่าง</option> <option value="แผนกจ่ายกลาง">แผนกจ่ายกลาง</option> <option value="สำนักงาน">สำนักงาน</option> <option value="จป.">จป.</option> <option value="ฝ่ายบุคคล">ฝ่ายบุคคล</option> <option value="ห้องประชุมชั้น 2">ห้องประชุมชั้น 2</option> <option value="แผนการตลาด">แผนการตลาด</option> <option value="CEO">CEO</option> <option value="HIFU">HIFU</option> </select>
-     </div>
-     <div id="device-list" class="device-grid"></div>
+    <div id="tab-list" class="tab-content">
+     <h2 style="margin-bottom: 25px; color: #667eea;" id="list-title">รายการอุปกรณ์ที่ลงทะเบียนแล้ว</h2>
+     <div id="device-list-container" class="device-list">
+      </div>
     </div>
    </div>
-   <div id="toast" class="toast"></div>
   </div>
+  <div id="toast" class="toast"></div>
   <script>
+    // --------------------------------------------------------------------------------
+    // ส่วนที่ 1: การตั้งค่าและการสื่อสารกับ Google Apps Script (Backend)
+    // --------------------------------------------------------------------------------
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAEkm8atik0ReGyF8UucVv5dUyCXcmcfxJKnLSdUtr0LJnBXEWNzUqUxzMtQ0Qb6Y-/exec'; // <--- ใส่ URL ตรงนี้ 
+    
+    // ฟังก์ชันหลักสำหรับสื่อสารกับ Apps Script
+    async function postData(action, payload) {
+      if (!SCRIPT_URL || SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzAEkm8atik0ReGyF8UucVv5dUyCXcmcfxJKnLSdUtr0LJnBXEWNzUqUxzMtQ0Qb6Y-/exec') {
+          console.error("SCRIPT_URL is not set.");
+          return { status: 'error', message: 'กรุณาใส่ Apps Script URL ในโค้ดก่อน' };
+      }
+      
+      const url = `${SCRIPT_URL}?action=${action}`;
+      try {
+          const response = await fetch(url, {
+              method: 'POST',
+              mode: 'cors', 
+              cache: 'no-cache',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const dataText = await response.text();
+          return JSON.parse(dataText);
+      } catch (error) {
+          console.error(`Error in postData for action ${action}:`, error);
+          return { status: 'error', message: `การเชื่อมต่อล้มเหลว: ${error.message}` };
+      }
+    }
+
+    // --------------------------------------------------------------------------------
+    // ส่วนที่ 2: ตัวแปรและการกำหนดค่า (Variables and Configs)
+    // --------------------------------------------------------------------------------
     const defaultConfig = {
-      app_title: "ระบบลงทะเบียนอุปกรณ์คอมพิวเตอร์",
-      register_button_text: "ลงทะเบียนอุปกรณ์",
-      device_list_title: "รายการอุปกรณ์ทั้งหมด",
-      primary_color: "#667eea",
-      secondary_color: "#764ba2",
-      surface_color: "#ffffff",
-      text_color: "#333333",
-      accent_color: "#4caf50"
+      app_name: 'ระบบลงทะเบียนอุปกรณ์',
+      primary_color: '#667eea',
+      secondary_color: '#764ba2',
+      departments: ['IT', 'บัญชี', 'บุคคล', 'การตลาด', 'อื่นๆ'],
+      device_types: ['คอมพิวเตอร์', 'โน้ตบุ๊ก', 'เซิร์ฟเวอร์', 'แท็บเล็ต', 'เครื่องพิมพ์', 'อื่นๆ']
     };
 
+    let currentConfig = defaultConfig;
     let allDevices = [];
     let currentImageData = null;
     let currentAssetImageData = null;
+    let currentTab = 'register';
 
-    const dataHandler = {
-      onDataChanged(data) {
-        allDevices = data;
-        renderDeviceList();
-      }
-    };
+    // --------------------------------------------------------------------------------
+    // ส่วนที่ 3: ฟังก์ชันการจัดการ UI และ Data
+    // --------------------------------------------------------------------------------
 
-    async function onConfigChange(config) {
-      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
-      document.getElementById('register-tab-text').textContent = config.register_button_text || defaultConfig.register_button_text;
-      document.getElementById('device-list-title').textContent = config.device_list_title || defaultConfig.device_list_title;
-      
-      const primaryColor = config.primary_color || defaultConfig.primary_color;
-      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
-      
-      document.querySelector('.header h1').style.color = primaryColor;
-      document.querySelectorAll('.tab-button.active').forEach(el => {
-        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
-      });
-      document.querySelectorAll('.submit-button').forEach(el => {
-        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
-      });
-      document.querySelectorAll('.badge').forEach(el => {
-        el.style.background = primaryColor;
-      });
-      document.querySelectorAll('.device-info h3').forEach(el => {
-        el.style.color = primaryColor;
-      });
-      document.querySelectorAll('h2').forEach(el => {
-        el.style.color = primaryColor;
-      });
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      document.getElementById(`tab-${tabId}-btn`).classList.add('active');
     }
 
-    async function init() {
-      if (window.dataSdk) {
-        const initResult = await window.dataSdk.init(dataHandler);
-        if (!initResult.isOk) {
-          showToast('ไม่สามารถเชื่อมต่อฐานข้อมูลได้', 'error');
-        }
-      }
+    function handleDropdownChange(type) {
+      const dropdown = document.getElementById(type);
+      const customGroup = document.getElementById(`custom-${type}-group`);
+      const customInput = document.getElementById(`custom_${type}`);
 
-      if (window.elementSdk) {
-        window.elementSdk.init({
-          defaultConfig,
-          onConfigChange,
-          mapToCapabilities: (config) => ({
-            recolorables: [
-              {
-                get: () => config.primary_color || defaultConfig.primary_color,
-                set: (value) => {
-                  window.elementSdk.config.primary_color = value;
-                  window.elementSdk.setConfig({ primary_color: value });
-                }
-              },
-              {
-                get: () => config.secondary_color || defaultConfig.secondary_color,
-                set: (value) => {
-                  window.elementSdk.config.secondary_color = value;
-                  window.elementSdk.setConfig({ secondary_color: value });
-                }
-              }
-            ],
-            borderables: [],
-            fontEditable: undefined,
-            fontSizeable: undefined
-          }),
-          mapToEditPanelValues: (config) => new Map([
-            ["app_title", config.app_title || defaultConfig.app_title],
-            ["register_button_text", config.register_button_text || defaultConfig.register_button_text],
-            ["device_list_title", config.device_list_title || defaultConfig.device_list_title]
-          ])
-        });
-
-        await onConfigChange(window.elementSdk.config);
-      }
-
-      setupEventListeners();
-    }
-
-    function setupEventListeners() {
-      document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', () => {
-          const tabName = button.dataset.tab;
-          switchTab(tabName);
-        });
-      });
-
-      document.getElementById('device-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        await handleSubmit();
-      });
-
-      document.getElementById('take-photo-btn').addEventListener('click', () => {
-        document.getElementById('camera-input').click();
-      });
-
-      document.getElementById('upload-photo-btn').addEventListener('click', () => {
-        document.getElementById('file-input').click();
-      });
-
-      document.getElementById('clear-photo-btn').addEventListener('click', () => {
-        clearImage();
-      });
-
-      document.getElementById('take-asset-photo-btn').addEventListener('click', () => {
-        document.getElementById('asset-camera-input').click();
-      });
-
-      document.getElementById('upload-asset-photo-btn').addEventListener('click', () => {
-        document.getElementById('asset-file-input').click();
-      });
-
-      document.getElementById('clear-asset-photo-btn').addEventListener('click', () => {
-        clearAssetImage();
-      });
-
-      document.getElementById('camera-input').addEventListener('change', handleImageSelect);
-      document.getElementById('file-input').addEventListener('change', handleImageSelect);
-      document.getElementById('asset-camera-input').addEventListener('change', handleAssetImageSelect);
-      document.getElementById('asset-file-input').addEventListener('change', handleAssetImageSelect);
-
-      document.getElementById('department').addEventListener('change', (e) => {
-        const customDeptGroup = document.getElementById('custom-department-group');
-        const customDeptInput = document.getElementById('custom_department');
-        
-        if (e.target.value === 'อื่นๆ') {
-          customDeptGroup.style.display = 'block';
-          customDeptInput.required = true;
-        } else {
-          customDeptGroup.style.display = 'none';
-          customDeptInput.required = false;
-          customDeptInput.value = '';
-        }
-      });
-
-      document.getElementById('device_type').addEventListener('change', (e) => {
-        const customDeviceTypeGroup = document.getElementById('custom-device-type-group');
-        const customDeviceTypeInput = document.getElementById('custom_device_type');
-        
-        if (e.target.value === 'อื่นๆ') {
-          customDeviceTypeGroup.style.display = 'block';
-          customDeviceTypeInput.required = true;
-        } else {
-          customDeviceTypeGroup.style.display = 'none';
-          customDeviceTypeInput.required = false;
-          customDeviceTypeInput.value = '';
-        }
-      });
-
-      document.getElementById('search-box').addEventListener('input', () => {
-        renderDeviceList();
-      });
-
-      document.getElementById('department-filter').addEventListener('change', () => {
-        renderDeviceList();
-      });
-    }
-
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-
-      const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
-      const activeContent = document.getElementById(`${tabName}-tab`);
-      
-      if (activeButton && activeContent) {
-        activeButton.classList.add('active');
-        activeContent.classList.add('active');
-      }
-    }
-
-    function handleImageSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          currentImageData = e.target.result;
-          const preview = document.getElementById('image-preview');
-          preview.src = currentImageData;
-          preview.classList.add('show');
-          document.getElementById('clear-photo-btn').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+      if (dropdown.value === 'อื่นๆ') {
+        customGroup.style.display = 'flex';
+        customInput.required = true;
+      } else {
+        customGroup.style.display = 'none';
+        customInput.required = false;
+        customInput.value = '';
       }
     }
 
     function clearImage() {
       currentImageData = null;
-      const preview = document.getElementById('image-preview');
+      const preview = document.getElementById('image_preview');
+      const text = document.getElementById('upload-text');
+      const clearBtn = document.getElementById('clear-image-btn');
       preview.src = '';
-      preview.classList.remove('show');
-      document.getElementById('camera-input').value = '';
-      document.getElementById('file-input').value = '';
-      document.getElementById('clear-photo-btn').style.display = 'none';
-    }
-
-    function handleAssetImageSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          currentAssetImageData = e.target.result;
-          const preview = document.getElementById('asset-image-preview');
-          preview.src = currentAssetImageData;
-          preview.classList.add('show');
-          document.getElementById('clear-asset-photo-btn').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
+      preview.style.display = 'none';
+      text.style.display = 'block';
+      clearBtn.classList.remove('show');
     }
 
     function clearAssetImage() {
       currentAssetImageData = null;
-      const preview = document.getElementById('asset-image-preview');
+      const preview = document.getElementById('asset_image_preview');
+      const text = document.getElementById('asset-upload-text');
+      const clearBtn = document.getElementById('clear-asset-image-btn');
       preview.src = '';
-      preview.classList.remove('show');
-      document.getElementById('asset-camera-input').value = '';
-      document.getElementById('asset-file-input').value = '';
-      document.getElementById('clear-asset-photo-btn').style.display = 'none';
+      preview.style.display = 'none';
+      text.style.display = 'block';
+      clearBtn.classList.remove('show');
     }
 
+    function handleImageSelect(event) {
+      handleImageSelection(event, 'image_preview', 'upload-text', 'clear-image-btn', (data) => currentImageData = data);
+    }
+
+    function handleAssetImageSelect(event) {
+      handleImageSelection(event, 'asset_image_preview', 'asset-upload-text', 'clear-asset-image-btn', (data) => currentAssetImageData = data);
+    }
+
+    function handleImageSelection(event, previewId, textId, clearBtnId, setDataCallback) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target.result;
+        setDataCallback(dataUrl);
+
+        const preview = document.getElementById(previewId);
+        const text = document.getElementById(textId);
+        const clearBtn = document.getElementById(clearBtnId);
+
+        preview.src = dataUrl;
+        preview.style.display = 'block';
+        text.style.display = 'none';
+        clearBtn.classList.add('show');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderDeviceList() {
+      const container = document.getElementById('device-list-container');
+      document.getElementById('device-count').textContent = allDevices.length;
+
+      if (allDevices.length === 0) {
+        container.innerHTML = '<div class="no-data">ไม่พบข้อมูลอุปกรณ์</div>';
+        return;
+      }
+
+      container.innerHTML = allDevices.map(device => `
+        <div class="device-card">
+          <img class="device-card-image" src="${device.image_data || device.asset_image_data || 'placeholder.jpg'}" alt="${device.device_name || 'Device Image'}">
+          <div class="device-card-content">
+            <h3 style="color: ${currentConfig.primary_color || '#667eea'};">${device.device_name || 'ไม่มีชื่อ'}</h3>
+            <p><strong>ID/Serial:</strong> ${device.device_id || 'ไม่ระบุ'}</p>
+            <p><strong>ผู้ใช้งาน:</strong> ${device.user_name || 'ไม่ระบุ'}</p>
+            <div class="badge-container">
+              <span class="badge" style="background: ${currentConfig.secondary_color || '#764ba2'};">${device.device_type || 'ไม่ระบุ'}</span>
+              <span class="badge" style="background: ${currentConfig.secondary_color || '#764ba2'};">${device.department}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function onConfigChange(config) {
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      
+      document.getElementById('app-name').textContent = config.app_name || defaultConfig.app_name;
+      document.querySelectorAll('.tab-button.active').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+      });
+
+      document.getElementById('register-form-title').style.color = primaryColor;
+      document.getElementById('list-title').style.color = primaryColor;
+      
+      document.querySelectorAll('.device-card-content h3').forEach(el => {
+        el.style.color = primaryColor;
+      });
+
+      document.querySelectorAll('.badge').forEach(el => {
+        el.style.background = secondaryColor;
+      });
+      
+      // Update dropdown options
+      const departmentSelect = document.getElementById('department');
+      const deviceTypeSelect = document.getElementById('device_type');
+      
+      const updateOptions = (selectElement, options) => {
+          selectElement.innerHTML = '';
+          options.forEach(option => {
+              const opt = document.createElement('option');
+              opt.value = option;
+              opt.textContent = option;
+              selectElement.appendChild(opt);
+          });
+      };
+
+      updateOptions(departmentSelect, config.departments || defaultConfig.departments);
+      updateOptions(deviceTypeSelect, config.device_types || defaultConfig.device_types);
+    }
+
+    function setupEventListeners() {
+      // Setup listeners for custom inputs if needed (already handled by onchange)
+    }
+
+
+    // --- init() (ปรับปรุงใหม่) ---
+    async function init() {
+      // 1. โหลดข้อมูลการตั้งค่า (จำลองการตั้งค่าจาก Canva)
+      const storedConfig = localStorage.getItem('app_config');
+      if (storedConfig) {
+        currentConfig = JSON.parse(storedConfig);
+      }
+      onConfigChange(currentConfig);
+
+      // 2. ดึงข้อมูลอุปกรณ์ทั้งหมดจาก Google Sheets
+      const result = await postData('read', {});
+      
+      if (result && result.status === 'success') {
+        allDevices = result.data || [];
+        renderDeviceList();
+        showToast(`โหลดข้อมูลอุปกรณ์สำเร็จ: ${allDevices.length} รายการ`, 'success');
+      } else {
+        showToast(`ไม่สามารถโหลดข้อมูลอุปกรณ์ได้: ${result.message || 'กรุณาตรวจสอบ Apps Script'}`, 'error');
+        renderDeviceList(); 
+      }
+      
+      setupEventListeners();
+    }
+
+    // --- handleSubmit() (ปรับปรุงใหม่) ---
     async function handleSubmit() {
+      if (!document.getElementById('device-form').checkValidity()) {
+        showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
+        return;
+      }
       if (allDevices.length >= 999) {
-        showToast('ถึงขีดจำกัดสูงสุด 999 รายการ กรุณาลบข้อมูลบางรายการก่อน', 'error');
+        showToast('ถึงขีดจำกัดในการลงทะเบียน (999 รายการ)', 'error');
         return;
       }
 
@@ -709,16 +706,22 @@
         device_type: finalDeviceType,
         custom_device_type: selectedDeviceType === 'อื่นๆ' ? customDeviceType : '',
         detail: document.getElementById('detail').value || '',
-        image_data: currentImageData || '',
-        asset_image_data: currentAssetImageData || '',
+        // ส่ง Base64 ไปให้ Apps Script จัดการอัปโหลดไป Google Drive
+        image_data: currentImageData || '', 
+        asset_image_data: currentAssetImageData || '', 
         created_at: new Date().toISOString()
       };
 
-      if (window.dataSdk) {
-        const result = await window.dataSdk.create(formData);
-        
-        if (result.isOk) {
+      // การบันทึกข้อมูล: ใช้ Apps Script แทน Data SDK
+      try {
+        const result = await postData('create', formData);
+
+        if (result && result.status === 'success') {
           showToast('บันทึกข้อมูลสำเร็จ', 'success');
+          // ดึงข้อมูลใหม่เพื่ออัปเดตรายการ
+          await init(); 
+          
+          // ล้างฟอร์ม
           document.getElementById('device-form').reset();
           clearImage();
           clearAssetImage();
@@ -726,88 +729,19 @@
           document.getElementById('custom-device-type-group').style.display = 'none';
           switchTab('list');
         } else {
-          showToast('เกิดข้อผิดพลาดในการบันทึกข้อมูล', 'error');
+          showToast(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${result.message || 'ไม่ทราบสาเหตุ'}`, 'error');
         }
-      }
 
+      } catch (error) {
+        console.error("Error submitting form via Apps Script:", error);
+        showToast('เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์', 'error');
+      }
+      
       submitBtn.disabled = false;
       btnText.textContent = 'บันทึกข้อมูล';
     }
 
-    function renderDeviceList() {
-      const listContainer = document.getElementById('device-list');
-      const searchTerm = document.getElementById('search-box').value.toLowerCase();
-      const selectedDept = document.getElementById('department-filter').value;
-
-      let filteredDevices = allDevices;
-
-      if (searchTerm) {
-        filteredDevices = filteredDevices.filter(device => 
-          device.device_id.toLowerCase().includes(searchTerm) ||
-          device.device_name.toLowerCase().includes(searchTerm) ||
-          device.user_name.toLowerCase().includes(searchTerm)
-        );
-      }
-
-      if (selectedDept) {
-        filteredDevices = filteredDevices.filter(device => device.department === selectedDept);
-      }
-
-      if (filteredDevices.length === 0) {
-        listContainer.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon">📦</div>
-            <h3>ไม่พบข้อมูลอุปกรณ์</h3>
-            <p>ยังไม่มีอุปกรณ์ที่ลงทะเบียน หรือไม่พบข้อมูลที่ค้นหา</p>
-          </div>
-        `;
-        return;
-      }
-
-      const sortedDevices = [...filteredDevices].sort((a, b) => 
-        new Date(b.created_at) - new Date(a.created_at)
-      );
-
-      listContainer.innerHTML = sortedDevices.map(device => `
-        <div class="device-card">
-          <div class="device-image-container">
-            ${device.image_data ? 
-              `<img src="${device.image_data}" alt="${device.device_name}" class="device-image">` :
-              `<div class="no-image-placeholder">🖥️</div>`
-            }
-          </div>
-          ${device.asset_image_data ? `
-          <div class="device-image-container" style="height: 120px; margin-top: 10px;">
-            <img src="${device.asset_image_data}" alt="รหัสทรัพย์สิน ${device.device_id}" class="device-image">
-          </div>
-          ` : ''}
-          <div class="device-info">
-            <h3>${device.device_name}</h3>
-            <p><strong>รหัสทรัพย์สิน:</strong> ${device.device_id}</p>
-            <p><strong>ประเภท:</strong> ${device.device_type || '-'}</p>
-            <p><strong>ผู้ใช้งาน:</strong> ${device.user_name}</p>
-            <p><strong>แผนก:</strong> ${device.department}</p>
-            ${device.detail ? `<p><strong>รายละเอียด:</strong> ${device.detail}</p>` : ''}
-            <div>
-              <span class="badge">${device.device_type || 'ไม่ระบุ'}</span>
-              <span class="badge">${device.department}</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = `toast ${type} show`;
-      
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ab91af1a11c26d9',t:'MTc2NTMzMTU3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ </body>
 </html>
